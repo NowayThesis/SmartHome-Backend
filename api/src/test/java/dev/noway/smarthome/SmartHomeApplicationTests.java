@@ -1,4 +1,4 @@
-package dev.noway.SmartHome;
+package dev.noway.smarthome;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
