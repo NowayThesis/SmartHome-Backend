@@ -1,0 +1,20 @@
+footer {
+    bottom: 0px;
+    width: 100%;
+    position: fixed;
+}
+
+#divFooter {
+    font-family: 'Open Sans', sans-serif;
+    background-color: ghostwhite;
+    color: rgb(180, 173, 173);
+    padding-top: 5px;
+    line-height: 23px;
+    font-size: 12px;
+    text-transform: none;
+    background-repeat: repeat repeat;
+}
+
+#divFooter a {
+    color: #029f5b;
+}

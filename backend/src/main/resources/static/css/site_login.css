@@ -1,0 +1,57 @@
+.login-register-form-section {
+    max-width: 400px;
+    position: absolute;
+    top: 50%;
+    margin-bottom: -50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    background: #f2f2f2;
+    padding: 15px 16px 10px;
+    border-radius: 5px;
+}
+
+.login-register-form-section i {
+    width: 10px;
+}
+
+.login-register-form-section .nav-tabs > li > a {
+    color: #4ebdd1;
+}
+
+.login-register-form-section .nav-tabs > li.active > a {
+    background-color: #4ebdd1;
+    border-color: #4ebdd1;
+    color: white;
+}
+
+.login-register-form-section .nav-tabs > li > a,
+.login-register-form-section .nav-tabs > li.active > a {
+    width: 170px;
+    text-align: center;
+    border-radius: 0;
+}
+
+.login-register-form-section .nav-tabs {
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
+.login-register-form-section .btn-custom {
+    width: 100%;
+    background-color: #4ebdd1;
+    border-color: #4ebdd1;
+    margin-bottom: 0.5em;
+    border-radius: 0;
+}
+
+.login-register-form-section .btn-custom:hover {
+    width: 100%;
+    background-color: #48A497;
+    border-color: #4ebdd1;
+}
+
+.login-register-form-section .form-group {
+    padding: 0 20px;
+}
+
