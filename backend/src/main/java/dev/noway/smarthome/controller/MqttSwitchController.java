@@ -21,7 +21,7 @@ package dev.noway.smarthome.controller;
 //@ComponentScan
 //public class MqttSwitchController {
 //
-//    private static final Logger logger = LoggerFactory.getLogger(MqttSwitchontroller.class);
+//    private static final Logger logger = LoggerFactory.getLogger(MqttSwitchController.class);
 //
 //    @Autowired
 //    private MqttCatalogService mqttCatalogService;
@@ -35,7 +35,7 @@ package dev.noway.smarthome.controller;
 //        try {
 //            reqMqttCatalogModel.setAddDate(LocalDateTime.now());
 //            reqMqttCatalogModel.setTopic("/././.");
-//            reqMqttCatalogModel.getMessage(globalController.getLoginUser().getId());
+//            reqMqttCatalogModel.setMessage("");
 //            mqttCatalogService.save(reqMqttCatalogModel);
 //            redirectAttributes.addFlashAttribute("msg", "success");
 //        } catch (Exception e) {

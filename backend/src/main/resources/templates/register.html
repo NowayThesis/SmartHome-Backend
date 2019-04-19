@@ -14,27 +14,21 @@
             <ul class="nav nav-tabs" role="tablist">
                 <li class="col-xs-6"><a th:href="@{/login}">Login</a></li>
                 <li class="col-xs-6"><a class="active" href="#register" data-toggle="tab" style="background-color: #4ebdd1; border-color: #4ebdd1; color: white;">Register</a></li>
-
             </ul>
             <div class="tab-content">
                 <div role="tabpanel" class="tab-pane fade in active" id="register">
-
                     <div th:if="${saveUser eq 'success'}" class="alert alert-success alert-dismissable">
-                        <button type="button" class="close" data-dismiss="alert"
-                                aria-hidden="true">&times;</button>
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                         <strong>User registered Successfully</strong> Please Login
                     </div>
                     <div th:if="${saveUser eq 'exist-email'}" class="alert alert-danger alert-dismissable">
-                        <button type="button" class="close" data-dismiss="alert"
-                                aria-hidden="true">&times;</button>
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                         <strong>Error!</strong> User email already used !!!
                     </div>
                     <div th:if="${saveUser eq 'fail'}" class="alert alert-danger alert-dismissable">
-                        <button type="button" class="close" data-dismiss="alert"
-                                aria-hidden="true">&times;</button>
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                         <strong>Error!</strong> Unexpected error !!!
                     </div>
-
                     <form id="registerForm" th:object="${reqUser}" th:action="@{/user/register}" method="post"
                           class="form-horizontal">
                         <div class="form-group ">
