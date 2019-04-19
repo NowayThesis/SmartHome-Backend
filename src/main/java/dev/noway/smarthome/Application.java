@@ -17,7 +17,7 @@ public class Application implements WebMvcConfigurer {
 
     private static final Logger logger = LoggerFactory.getLogger(dev.noway.smarthome.Application.class);
 
-    public static void main(String[] args) throws Throwable {
+    public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
     }
 

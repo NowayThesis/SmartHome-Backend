@@ -16,12 +16,12 @@
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane fade in active" id="login">
 
-                        <!--<div th:if="${param.error}" class="alert alert-danger alert-dismissable">-->
-                            <!--<button type="button" class="close" data-dismiss="alert"-->
-                                    <!--aria-hidden="true">&times;-->
-                            <!--</button>-->
-                            <!--Invalid email address or password.-->
-                        <!--</div>-->
+                        <div th:if="${param.error}" class="alert alert-danger alert-dismissable">
+                            <button type="button" class="close" data-dismiss="alert"
+                                    aria-hidden="true">&times;
+                            </button>
+                            Invalid email address or password.
+                        </div>
                         <form th:action="@{/login}" method="post" class="form-horizontal">
                             <div class="form-group ">
                                 <div class="input-group">
