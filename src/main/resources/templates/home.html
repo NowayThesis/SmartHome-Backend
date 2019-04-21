@@ -8,9 +8,15 @@
 <body>
 <div th:replace="fragments/header :: header"></div>
 <div class="tab-content">
+<div style="margin: 100px">
+                        <form th:action="@{/api/mqtt/sub/start}" method="get">
+                            <input class="btn" type="submit" value="ON"/>
+                        </form>
 
-    <button id="registerForm" th:action="@{/api/mqtt/saveCatalog}" method="post" value="ON">ON</button>
-
+                        <form th:action="@{/api/mqtt/sub/stop}" method="get">
+                            <input class="btn" type="submit" value="OFF"/>
+                        </form>
+</div>
 
 </div>
 <footer>

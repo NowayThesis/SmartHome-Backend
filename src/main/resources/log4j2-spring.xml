@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration monitorInterval="60">
     <Properties>
-        <Property name="log-path">D:\training\projects\todoBoot</Property>
+        <Property name="log-path">/target/log</Property>
         <!--change log-path-->
     </Properties>
     <Appenders>
@@ -19,7 +19,7 @@
                 </pattern>
             </PatternLayout>
         </File>
-        <File name="SpringBoot-File-Appender" fileName="${log-path}/todoApp.log">
+        <File name="SpringBoot-File-Appender" fileName="${log-path}/app.log">
             <PatternLayout>
                 <pattern>
                     [%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n

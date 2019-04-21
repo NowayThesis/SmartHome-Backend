@@ -10,7 +10,7 @@ public class MqttCatalogModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", unique = true)
+    @Column(name = "id", unique = true, updatable = false, nullable = false)
     private int id;
 
     @Column(name = "topic")
@@ -19,8 +19,13 @@ public class MqttCatalogModel {
     @Column(name = "message")
     private String message;
 
+    @Column(name = "broker_id")
+    private int brokerId;
+
+    @Column(name = "client_id")
+    private int clientId;
+
     @DateTimeFormat(pattern = "yyyy.MM.dd HH:mm:ss.SSSZ")
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "add_date", nullable = false)
     private LocalDateTime addDate;
 
@@ -48,21 +53,36 @@ public class MqttCatalogModel {
         this.message = message;
     }
 
+    public int getBrokerId() {
+        return brokerId;
+    }
+
+    public void setBrokerId(int brokerId) {
+        this.brokerId = brokerId;
+    }
+
+    public int getClientId() {
+        return clientId;
+    }
+
+    public void setClientId(int clientId) {
+        this.clientId = clientId;
+    }
+
     public LocalDateTime getAddDate() {
         return addDate;
     }
 
-    public void setAddDate(LocalDateTime addDate) {
-        this.addDate = addDate;
-    }
-
-    public MqttCatalogModel() {
-    }
-
-    public MqttCatalogModel(String topic, String message) {
-        this.topic = topic;
-        this.message = message;
+    public void setAddDate() {
         this.addDate = LocalDateTime.now();
+    }
+
+    public MqttCatalogModel(String topic, String message, int clientId, int brokerId) {
+        this.setTopic(topic);
+        this.setMessage(message);
+        this.setAddDate();
+        this.setClientId(clientId);
+        this.setBrokerId(brokerId);
     }
 
     public String htmlTableRow() {
@@ -71,6 +91,6 @@ public class MqttCatalogModel {
 
     @Override
     public String toString() {
-        return "MQTT: topic={" + this.topic + "}, payload={" + this.message + "}, date={"+addDate.toString()+"}";
+        return "MQTT: id={"+this.id+"}, topic={" + this.topic + "}, payload={" + this.message + "}, date={"+addDate.toString()+"}";
     }
 }

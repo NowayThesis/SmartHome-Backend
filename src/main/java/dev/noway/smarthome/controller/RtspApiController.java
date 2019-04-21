@@ -15,8 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
+@RequestMapping("api")
 @RestController
-public class RtspController {
+public class RtspApiController {
 
     @GetMapping("/rtsp1")
     public ModelAndView redirectWithUsingRedirectPrefix(ModelMap model) {

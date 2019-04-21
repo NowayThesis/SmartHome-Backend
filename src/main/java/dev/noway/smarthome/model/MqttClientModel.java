@@ -1,12 +1,13 @@
 package dev.noway.smarthome.model;
 
 import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity()
-@Table(name = "mqtt_broker", schema = "smart_home")
-public class MqttBrokerModel {
+@Table(name = "mqtt_client_model", schema = "smart_home")
+public class MqttClientModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -26,13 +27,8 @@ public class MqttBrokerModel {
     @Column(name = "add_date", nullable = false)
     private LocalDateTime addDate;
 
-    public MqttBrokerModel() {
-    }
-
-    public MqttBrokerModel(String network, String hardwer) {
-        setLabel("");
-        setNetwork(network);
-        setHardwer(hardwer);
+    public MqttClientModel(String network, String hardwer) {
+        this.label = null;
         setAddDate(LocalDateTime.now());
     }
 
@@ -74,16 +70,5 @@ public class MqttBrokerModel {
 
     public void setAddDate(LocalDateTime addDate) {
         this.addDate = addDate;
-    }
-
-    @Override
-    public String toString() {
-        return "MqttBrokerModel{" +
-                "id=" + id +
-                ", label='" + label + '\'' +
-                ", network='" + network + '\'' +
-                ", hardwer='" + hardwer + '\'' +
-                ", addDate=" + addDate +
-                '}';
     }
 }
