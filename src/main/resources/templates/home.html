@@ -7,17 +7,19 @@
 </head>
 <body>
 <div th:replace="fragments/header :: header"></div>
-<div class="tab-content">
-<div style="margin: 100px">
-                        <form th:action="@{/api/mqtt/sub/start}" method="get">
-                            <input class="btn" type="submit" value="ON"/>
-                        </form>
-
-                        <form th:action="@{/api/mqtt/sub/stop}" method="get">
-                            <input class="btn" type="submit" value="OFF"/>
-                        </form>
-</div>
-
+<div class="container" style="top: 80px;position: absolute;">
+    <div class="row w-100">
+        <div class="col-6">
+            <form th:action="@{/api/mqtt/sub/start}" method="get">
+                <button type="submit" class="btn btn-primary">MQTT Sob ON</button>
+            </form>
+        </div>
+        <div class="col-6">
+            <form th:action="@{/api/mqtt/sub/stop}" method="get">
+                <button type="submit" class="btn btn-primary">MQTT Sob OFF</button>
+            </form>
+        </div>
+    </div>
 </div>
 <footer>
     <div class="separator" th:replace="fragments/footer :: footer"></div>

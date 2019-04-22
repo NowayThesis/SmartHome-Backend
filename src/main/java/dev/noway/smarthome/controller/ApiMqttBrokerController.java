@@ -1,9 +1,7 @@
 package dev.noway.smarthome.controller;
 
 import dev.noway.smarthome.model.MqttBrokerModel;
-import dev.noway.smarthome.model.MqttCatalogModel;
 import dev.noway.smarthome.service.MqttBrokerService;
-import dev.noway.smarthome.utils.MqttBrokerActual;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,16 +17,7 @@ import java.util.Collection;
 public class ApiMqttBrokerController {
 
     @Autowired
-    private MqttBrokerActual mqttBrokerActual;
-    @Autowired
     private MqttBrokerService mqttBrokerService;
-
-    @PreAuthorize("isAuthenticated()")
-    @RequestMapping(value = {"/"}, method = RequestMethod.GET, produces = "application/json")
-    @ResponseBody
-    public MqttBrokerModel actualBroker() {
-        return mqttBrokerActual.getActualBrokerModel();
-    }
 
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(value = {"/all"}, method = RequestMethod.GET, produces = "application/json")

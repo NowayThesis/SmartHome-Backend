@@ -1,20 +1,14 @@
 package dev.noway.smarthome.utils;
 
-import dev.noway.smarthome.service.LocalMachineInformationService;
 import org.eclipse.paho.client.mqttv3.*;
 import org.eclipse.paho.client.mqttv3.persist.MqttDefaultFilePersistence;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Service;
+import java.util.UUID;
 
 @Service
 @ComponentScan
 public class MqttConnect {
-
-    @Autowired
-    private LocalMachineInformationService localMachineInformationService;
-    @Autowired
-    private MqttBrokerActual mqttBrokerActual;
 
     private MqttClient mqttClient;
     private String mqttBrokerUrl = "";
@@ -25,6 +19,7 @@ public class MqttConnect {
     // közzétételéhez és fogadásához
     protected MqttClient getMqttClient(){
         if (mqttClient == null) {
+            String clientId = UUID.randomUUID().toString();
             // Kapcsolódás a kiszolgálóhoz, opciókat  melyek információk továbbítására
             // használhatjuk, mint a biztonsági hitelesítő adatok, a munkamenet-helyreállítási
             // mód, az újbóli csatlakoztatási mód
@@ -41,22 +36,13 @@ public class MqttConnect {
             String tmpDir = System.getProperty("user.dir") + "/target"; //System.getProperty("java.io.tmpdir");
             MqttDefaultFilePersistence dataStore = new MqttDefaultFilePersistence(tmpDir);
             try {
-                mqttClient = new MqttClient(getMqttBrokerUrl() + ":1883", localMachineInformationService.getClientId(), dataStore);
+                mqttClient = new MqttClient("tcp://192.168.1.15:1883", clientId, dataStore);
                 // Connect to Broker
                 mqttClient.connect(options);
-                mqttBrokerActual.setactualMqttBroker(localMachineInformationService);
             } catch (Exception e) {
                 System.out.println("Local MQTT client connect error!");
             }
         }
         return mqttClient;
-    }
-
-    public String getMqttBrokerUrl() {
-        if (mqttBrokerUrl==""){
-//            mqttBrokerUrl = "tcp://127.0.0.1";
-            mqttBrokerUrl = "tcp://192.168.1.15";
-        }
-        return mqttBrokerUrl;
     }
 }
