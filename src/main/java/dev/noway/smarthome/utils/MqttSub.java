@@ -2,7 +2,6 @@ package dev.noway.smarthome.utils;
 
 import dev.noway.smarthome.model.MqttBrokerModel;
 import dev.noway.smarthome.model.MqttCatalogModel;
-import dev.noway.smarthome.service.LocalMachineInformationService;
 import dev.noway.smarthome.service.MqttBrokerService;
 import dev.noway.smarthome.service.MqttCatalogService;
 import org.eclipse.paho.client.mqttv3.MqttException;
@@ -14,8 +13,8 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class MqttSub{
 
-    @Autowired
-    private LocalMachineInformationService localMachineInformationService;
+//    @Autowired
+//    private LocalMachineInformationService localMachineInformationService;
     @Autowired
     private MqttCatalogService mqttCatalogService;
     @Autowired
@@ -48,7 +47,7 @@ public class MqttSub{
             // elég üzenet (1 perc), a  várakozási () módszer kivételeket dob.
             mqttConnect.getMqttClient().subscribe(getTopic, mqttSubQos, (topic, msg) -> {
                 byte[] payload = msg.getPayload();
-                save(new MqttCatalogModel(topic, new String(payload), 0, getHardwerId()));
+                save(new MqttCatalogModel(topic, new String(payload), 0, 0));
                 receivedSignal.countDown();
             });
             receivedSignal.await(1, TimeUnit.MINUTES);
@@ -66,22 +65,22 @@ public class MqttSub{
 
     }
 
-    private int getHardwerId(){
-        if (!start) {
-            try {
-                MqttBrokerModel mb;
-                try {
-                    mb = mqttBrokerService.findHardwer(localMachineInformationService.getHardwerAddress());
-                    hardwerId = mb.getId();
-                } catch  (Exception e) {
-                    hardwerId = mqttBrokerService.findHardwer(mqttBrokerService.save(new MqttBrokerModel(localMachineInformationService.getNetwork().toString(), localMachineInformationService.getHardwerAddress())).getHardwer()).getId();
-                }
-            } catch (Exception e) {
-                hardwerId = 0;
-            }
-            start = true;
-
-        }
-        return hardwerId;
-    }
+//    private int getHardwerId(){
+//        if (!start) {
+//            try {
+//                MqttBrokerModel mb;
+//                try {
+//                    mb = mqttBrokerService.findHardwer(localMachineInformationService.getHardwerAddress());
+//                    hardwerId = mb.getId();
+//                } catch  (Exception e) {
+//                    hardwerId = mqttBrokerService.findHardwer(mqttBrokerService.save(new MqttBrokerModel(localMachineInformationService.getNetwork().toString(), localMachineInformationService.getHardwerAddress())).getHardwer()).getId();
+//                }
+//            } catch (Exception e) {
+//                hardwerId = 0;
+//            }
+//            start = true;
+//
+//        }
+//        return hardwerId;
+//    }
 }
