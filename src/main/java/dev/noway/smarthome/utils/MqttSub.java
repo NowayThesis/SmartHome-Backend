@@ -1,6 +1,5 @@
 package dev.noway.smarthome.utils;
 
-import dev.noway.smarthome.model.MqttBrokerModel;
 import dev.noway.smarthome.model.MqttCatalogModel;
 import dev.noway.smarthome.service.MqttBrokerService;
 import dev.noway.smarthome.service.MqttCatalogService;
@@ -79,8 +78,7 @@ public class MqttSub{
 //                hardwerId = 0;
 //            }
 //            start = true;
-//
-//        }
+////        }
 //        return hardwerId;
 //    }
 }

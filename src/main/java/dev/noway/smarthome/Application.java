@@ -23,7 +23,6 @@ public class Application implements WebMvcConfigurer {
 
     @Component
     public class ServerPortCustomizer implements WebServerFactoryCustomizer<ConfigurableWebServerFactory> {
-
         @Override
         public void customize(ConfigurableWebServerFactory factory) {
             factory.setPort(80);
@@ -34,12 +33,10 @@ public class Application implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
         registry.addResourceHandler("/webjars/**").addResourceLocations("/webjars/");
-
     }
 
     @Bean
     public Java8TimeDialect java8TimeDialect() {
         return new Java8TimeDialect();
     }
-
 }

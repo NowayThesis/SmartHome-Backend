@@ -3,7 +3,6 @@ package dev.noway.smarthome.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -20,7 +19,6 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationEn
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
-
 import java.util.LinkedHashMap;
 
 @Configuration
@@ -29,16 +27,11 @@ import java.util.LinkedHashMap;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static final String BASIC_AUTH_REALM_NAME = "smart_home";
-
     private static final String LOGIN_FORM_PATH = "/login";
-
     private static final String REST_PATH_PREFIX = "/rest/**";
 
     @Autowired
     private UserDetailsService userDS;
-    @Autowired
-    private MyBasicAuthenticationEntryPoint authenticationEntryPoint;
-
     @Autowired
     private MyAuthenticationSuccessHandler successHandler;
 
@@ -59,7 +52,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configureGlobalSecurity(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDS);
         auth.authenticationProvider(authenticationProvider());
-
         auth.inMemoryAuthentication()
                 .withUser("email")
                 .password(passwordEncoder().encode("password"))
@@ -103,9 +95,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected UserDetailsService userDetailsService() {
         return userDS;
     }
-
-
-
 
     @Bean
     public BasicAuthenticationFilter basicAuthenticationFilter()

@@ -77,6 +77,16 @@ public class MqttCatalogModel {
         this.addDate = LocalDateTime.now();
     }
 
+    public MqttCatalogModel() { }
+
+    public MqttCatalogModel(String topic, String message) {
+        this.setTopic(topic);
+        this.setMessage(message);
+        this.setAddDate();
+        this.setClientId(0);
+        this.setBrokerId(0);
+    }
+
     public MqttCatalogModel(String topic, String message, int clientId, int brokerId) {
         this.setTopic(topic);
         this.setMessage(message);

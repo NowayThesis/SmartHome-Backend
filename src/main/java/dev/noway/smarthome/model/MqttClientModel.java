@@ -1,12 +1,15 @@
 package dev.noway.smarthome.model;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Entity()
-@Table(name = "mqtt_client_model", schema = "smart_home")
+@Getter
+@Setter
+@Entity
+@Table(name = "mqtt_client", schema = "smart_home")
 public class MqttClientModel {
 
     @Id
@@ -14,13 +17,13 @@ public class MqttClientModel {
     @Column(name = "id", unique = true, updatable = false, nullable = false)
     private int id;
 
-    @Column(name = "label")
+    @Basic
     private String label;
 
-    @Column(name = "network")
+    @Basic
     private String network;
 
-    @Column(name = "hardwer")
+    @Basic
     private String hardwer;
 
     @DateTimeFormat(pattern = "yyyy.MM.dd HH:mm:ss.SSSZ")
@@ -28,47 +31,20 @@ public class MqttClientModel {
     private LocalDateTime addDate;
 
     public MqttClientModel(String network, String hardwer) {
-        this.label = null;
-        setAddDate(LocalDateTime.now());
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getLabel() {
-        return label;
-    }
-
-    public void setLabel(String label) {
-        this.label = label;
-    }
-
-    public String getNetwork() {
-        return network;
-    }
-
-    public void setNetwork(String network) {
+        this.label = "";
         this.network = network;
-    }
-
-    public String getHardwer() {
-        return hardwer;
-    }
-
-    public void setHardwer(String hardwer) {
         this.hardwer = hardwer;
+        this.addDate = LocalDateTime.now();
     }
 
-    public LocalDateTime getAddDate() {
-        return addDate;
-    }
-
-    public void setAddDate(LocalDateTime addDate) {
-        this.addDate = addDate;
+    @Override
+    public String toString() {
+        return "MqttClientModel{" +
+                "id=" + this.id +
+                ", label='" + this.label + '\'' +
+                ", network='" + this.network + '\'' +
+                ", hardwer='" + this.hardwer + '\'' +
+                ", addDate=" + this.addDate +
+                '}';
     }
 }

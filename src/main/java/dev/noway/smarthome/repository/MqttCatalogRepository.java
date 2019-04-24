@@ -4,11 +4,12 @@ import dev.noway.smarthome.model.MqttCatalogModel;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Repository
+@Transactional(propagation = Propagation.MANDATORY)
 public interface MqttCatalogRepository extends CrudRepository<MqttCatalogModel, Integer> {
 
     @Query("from MqttCatalogModel m where m.topic like %:topic%")

@@ -1,6 +1,5 @@
 package dev.noway.smarthome.controller;
 
-import dev.noway.smarthome.model.MqttBrokerModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

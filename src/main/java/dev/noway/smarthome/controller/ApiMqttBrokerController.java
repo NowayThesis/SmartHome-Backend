@@ -20,7 +20,7 @@ public class ApiMqttBrokerController {
     private MqttBrokerService mqttBrokerService;
 
     @PreAuthorize("isAuthenticated()")
-    @RequestMapping(value = {"/all"}, method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = {""}, method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
     public ResponseEntity<?> brokers() {
         Collection<MqttBrokerModel> mqttBrokerList = mqttBrokerService.findAll();

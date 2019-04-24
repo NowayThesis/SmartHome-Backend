@@ -12,7 +12,6 @@ public class MqttPub extends MqttConnect {
 
     @Autowired
     private MqttConnect mqttConnect;
-
     private int mqttPubQos = 2;
     private boolean MQTT_PUT_RETAINED = true;
 

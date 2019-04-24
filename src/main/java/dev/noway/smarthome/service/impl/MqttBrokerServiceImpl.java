@@ -5,8 +5,8 @@ import dev.noway.smarthome.repository.MqttBrokerRepository;
 import dev.noway.smarthome.service.MqttBrokerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.Collection;
 
 @Service
@@ -36,21 +36,25 @@ public class MqttBrokerServiceImpl implements MqttBrokerService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public MqttBrokerModel findById(int id) {
         return brokerRepository.findById(id).get();
     }
 
     @Override
+    @Transactional(readOnly = true)
     public MqttBrokerModel findNetwork(String network) {
         return brokerRepository.findByNetwork(network);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public MqttBrokerModel findHardwer(String hardwer) {
         return brokerRepository.findByHardwer(hardwer);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Collection<MqttBrokerModel> findAll() {
         Iterable<MqttBrokerModel> itr = brokerRepository.findAll();
         return (Collection<MqttBrokerModel>) itr;

@@ -1,0 +1,41 @@
+<div th:fragment="footer-master-script" xmlns:th="http://www.w3.org/1999/xhtml">
+    <script src="webjars/jquery/3.4.0/dist/jquery.js"></script>
+    <script src="webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="webjars/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js"></script>
+    <script src="webjars/bootstrap-datetimepicker/2.4.2/js/bootstrap-datetimepicker.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('#startDatePicker').datetimepicker({
+                defaultDate: 'now',
+                viewMode: 'days',
+                format: 'DD/MM/YYYY'
+            });
+        });
+    </script>
+    <script>
+        $('#modal-toTrash').on('show.bs.modal', function (e) {
+            $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+            $('#modal-toTrashHiddenId').val($(this).find('.btn-ok').attr('href'));
+        });
+        $('#modal-delete').on('show.bs.modal', function (e) {
+            $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+            $('#modal-deleteHiddenId').val($(this).find('.btn-ok').attr('href'));
+        });
+    </script>
+
+    <script>
+        var password = document.getElementById("password")
+            , confirm_password = document.getElementById("confirm_password");
+
+        function validatePassword() {
+            if (password.value != confirm_password.value) {
+                confirm_password.setCustomValidity("Passwords Don't Match");
+            } else {
+                confirm_password.setCustomValidity('');
+            }
+        }
+        password.onchange = validatePassword;
+        confirm_password.onkeyup = validatePassword;
+    </script>
+</div>
+

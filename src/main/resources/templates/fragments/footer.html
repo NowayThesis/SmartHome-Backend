@@ -1,22 +1,21 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-</head>
-<body>
-<div th:fragment="footer">
-    <div id="divFooter" class="footerArea">
+<footer th:fragment="footer" xmlns:th="http://www.w3.org/1999/xhtml">
+    <section id="footer">
         <div class="container">
-            <div class="row-fluid">
-                <div class="col-6 copyright">
-                    Copyright © 2019 | Powered by Noway
+            <div class="row w-100">
+                <div class="col-6">
+                    <ul class="list-unstyled list-inline social text-center mb-0">
+                        <li class="list-inline-item"><a href="#" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                        <li class="list-inline-item"><a href="#" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                        <li class="list-inline-item"><a href="#" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+                        <li class="list-inline-item"><a href="#" target="_blank"><i class="fa fa-envelope" aria-hidden="true"></i></a></li>
+                    </ul>
                 </div>
-                <div class="col-6 social_bookmarks">
-                    <a href="#"><i class="social foundicon-rss"></i> developer</a>
+                <div class="col-6 text-right text-white">
+                    &copy All right Reversed. <a class="text-green ml-2" href="https://www.noway.dev" target="_blank">Noway</a>
                 </div>
+                </hr>
             </div>
         </div>
-    </div>
-</div>
-</body>
-</html>
+    </section>
+</footer>
 

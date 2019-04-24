@@ -11,13 +11,13 @@ import java.util.UUID;
 public class MqttConnect {
 
     private MqttClient mqttClient;
-    private String mqttBrokerUrl = "";
+    private String mqttBrokerUrl = "192.168.1.15";
 
     // !!! A mintakódban egy másik IMqttClient példányt használtunk üzenetek fogadásához.
     // Csak annyit tettünk, hogy egyértelműbbé tegyük, hogy melyik kliens mit csinál,
     // de ez nem Paho-korlátozás - ha akarja, ugyanazt az ügyfelet használhatja üzenetek
     // közzétételéhez és fogadásához
-    protected MqttClient getMqttClient(){
+    public MqttClient getMqttClient(){
         if (mqttClient == null) {
             String clientId = UUID.randomUUID().toString();
             // Kapcsolódás a kiszolgálóhoz, opciókat  melyek információk továbbítására
@@ -36,7 +36,7 @@ public class MqttConnect {
             String tmpDir = System.getProperty("user.dir") + "/target"; //System.getProperty("java.io.tmpdir");
             MqttDefaultFilePersistence dataStore = new MqttDefaultFilePersistence(tmpDir);
             try {
-                mqttClient = new MqttClient("tcp://192.168.1.15:1883", clientId, dataStore);
+                mqttClient = new MqttClient("tcp://" + mqttBrokerUrl + ":1883", clientId, dataStore);
                 // Connect to Broker
                 mqttClient.connect(options);
             } catch (Exception e) {

@@ -11,7 +11,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,12 +64,10 @@ public class AuthUserDetailsService implements UserDetailsService {
         } else if (role == 2) {
             authList.add(new SimpleGrantedAuthority("ROLE_USER"));
         }
-
         return authList;
     }
 
     private UserModel getUserDetail(String email) {
-
         UserModel user = userService.findByEmail(email);
         if (user == null) {
             logger.warn("user '" + email + "' on null!");
