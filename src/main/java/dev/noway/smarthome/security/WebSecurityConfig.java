@@ -43,14 +43,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-        authenticationProvider.setUserDetailsService(userDS);
+        authenticationProvider.setUserDetailsService(userDetailsService());
         authenticationProvider.setPasswordEncoder(passwordEncoder());
         return authenticationProvider;
     }
 
     @Autowired
     public void configureGlobalSecurity(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDS);
+        auth.userDetailsService(userDetailsService());
         auth.authenticationProvider(authenticationProvider());
         auth.inMemoryAuthentication()
                 .withUser("email")
@@ -60,35 +60,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDS);
+        auth.userDetailsService(userDetailsService());
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .csrf()
-                .disable()
-                .authorizeRequests()
-                .antMatchers("/", "/login", "/register", "/user/register", "/static/**").permitAll()
-                .antMatchers("/", "/login", "/register", "/user/register", "/webjars/**").permitAll()
-                .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')").anyRequest().authenticated()
-                .and()
-                .formLogin()
-                .loginPage("/login")
-                .usernameParameter("email")
-                .passwordParameter("password")
-                .permitAll()
-                .successHandler(successHandler)
-                .and()
-                .logout()
-                .clearAuthentication(true)
-                .logoutUrl("/logout")
-                .logoutSuccessUrl("/")
-                .permitAll()
-                .and()
-                .exceptionHandling()
-                .authenticationEntryPoint(delegatingAuthenticationEntryPoint());
-
+            .csrf().disable().authorizeRequests()
+            .antMatchers("/", "/login", "/register", "/user/register", "/static/**").permitAll()
+            .antMatchers("/", "/login", "/register", "/user/register", "/webjars/**").permitAll()
+            .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')").anyRequest().authenticated()
+            .and()
+            .formLogin().loginPage("/login").usernameParameter("email").passwordParameter("password").permitAll().successHandler(successHandler)
+            .and()
+            .logout().clearAuthentication(true).logoutUrl("/logout").logoutSuccessUrl("/").permitAll()
+            .and()
+            .exceptionHandling().authenticationEntryPoint(delegatingAuthenticationEntryPoint());
     }
 
     @Override

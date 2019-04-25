@@ -27,12 +27,10 @@ public class MyAuthenticationSuccessHandler extends SimpleUrlAuthenticationSucce
                           HttpServletResponse response, Authentication authentication) throws IOException {
         String targetUrl = determineTargetUrl(authentication);
         System.out.println("handle: " + targetUrl);
-
         if (response.isCommitted()) {
             logger.warn("Can't redirect");
             return;
         }
-
         redirectStrategy.sendRedirect(request, response, targetUrl);
     }
 
@@ -44,7 +42,6 @@ public class MyAuthenticationSuccessHandler extends SimpleUrlAuthenticationSucce
             System.out.println("Authority: " + a.getAuthority());
             roles.add(a.getAuthority());
         }
-
         if (isAdmin(roles)) {
             return "/admin";
         } else if (isUser(roles)) {

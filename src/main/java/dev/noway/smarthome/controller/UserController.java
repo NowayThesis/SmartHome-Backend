@@ -64,17 +64,16 @@ public class UserController {
         logger.info("/user/register");
         UserModel user = userService.findByEmail(reqUser.getEmail());
         if (user != null) {
-            redirectAttributes.addFlashAttribute("saveUser", "exist-name");
-            return "redirect:/register";
-        }
-        user = userService.findByEmail(reqUser.getEmail());
-        if (user != null) {
             redirectAttributes.addFlashAttribute("saveUser", "exist-email");
             return "redirect:/register";
         }
 
         reqUser.setPassword(PassEncoding.getInstance().passwordEncoder.encode(reqUser.getPassword()));
-        reqUser.setRole(Roles.ROLE_USER.getValue());
+        if (userService.findByRole(Roles.ROLE_ADMIN.getValue()).size() == 0) {
+            reqUser.setRole(Roles.ROLE_ADMIN.getValue());
+        } else {
+            reqUser.setRole(Roles.ROLE_USER.getValue());
+        }
 
         if (userService.save(reqUser) != null) {
             redirectAttributes.addFlashAttribute("saveUser", "success");

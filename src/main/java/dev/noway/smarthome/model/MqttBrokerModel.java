@@ -17,13 +17,8 @@ public class MqttBrokerModel {
     @Column(name = "id", unique = true, updatable = false, nullable = false)
     private int id;
 
-    @Basic
     private String label;
-
-    @Basic
     private String network;
-
-    @Basic
     private String hardwer;
 
     @DateTimeFormat(pattern = "yyyy.MM.dd HH:mm:ss.SSSZ")
@@ -34,10 +29,10 @@ public class MqttBrokerModel {
     }
 
     public MqttBrokerModel(String network, String hardwer) {
-        this.label = "";
-        this.network = network;
-        this.hardwer = hardwer;
-        this.addDate = LocalDateTime.now();
+        this.setLabel("");
+        this.setNetwork(network);
+        this.setHardwer(hardwer);
+        this.setAddDate(LocalDateTime.now());
     }
 
     @Override

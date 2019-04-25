@@ -11,6 +11,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.core.userdetails.User;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,10 +20,10 @@ public class AuthUserDetailsService implements UserDetailsService {
 
     private static final Logger logger = LoggerFactory.getLogger(AuthUserDetailsService.class);
 
+    private User springUser;
+
     @Autowired
     private UserService userService;
-
-    private org.springframework.security.core.userdetails.User springUser;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -33,8 +34,10 @@ public class AuthUserDetailsService implements UserDetailsService {
         boolean accountNonLocked = true;
 
         UserModel user = getUserDetail(email);
+
         if (user != null) {
-            springUser = new org.springframework.security.core.userdetails.User(user.getEmail(),
+            springUser = new User(
+                    user.getEmail(),
                     user.getPassword(),
                     enabled,
                     accountNonExpired,
@@ -44,7 +47,8 @@ public class AuthUserDetailsService implements UserDetailsService {
             );
             return springUser;
         } else {
-            springUser = new org.springframework.security.core.userdetails.User("empty",
+            springUser = new User(
+                    "empty",
                     "empty",
                     false,
                     true,
@@ -59,6 +63,7 @@ public class AuthUserDetailsService implements UserDetailsService {
     public List<GrantedAuthority> getAuthorities(Integer role) {
 
         List<GrantedAuthority> authList = new ArrayList<GrantedAuthority>();
+
         if (role == 1) {
             authList.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
         } else if (role == 2) {
@@ -68,7 +73,9 @@ public class AuthUserDetailsService implements UserDetailsService {
     }
 
     private UserModel getUserDetail(String email) {
+
         UserModel user = userService.findByEmail(email);
+
         if (user == null) {
             logger.warn("user '" + email + "' on null!");
         } else {

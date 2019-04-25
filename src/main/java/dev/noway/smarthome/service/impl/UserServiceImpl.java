@@ -48,6 +48,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Collection<UserModel> findByRole(int role) {
+        Iterable<UserModel> itr = userRepository.findByRole(role);
+        return (Collection<UserModel>) itr;
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public Collection<UserModel> findAll() {
         Iterable<UserModel> itr = userRepository.findAll();

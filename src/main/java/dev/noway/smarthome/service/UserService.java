@@ -15,5 +15,7 @@ public interface UserService {
 
     UserModel findByEmail(String email);
 
+    Collection<UserModel> findByRole(int role);
+
     Collection<UserModel> findAll();
 }

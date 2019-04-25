@@ -1,8 +1,10 @@
 package dev.noway.smarthome.utils;
 
 import dev.noway.smarthome.model.MqttCatalogModel;
+import dev.noway.smarthome.model.MqttLastMessageModel;
 import dev.noway.smarthome.service.MqttBrokerService;
 import dev.noway.smarthome.service.MqttCatalogService;
+import dev.noway.smarthome.service.MqttLastMessageService;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,8 @@ public class MqttSub{
     @Autowired
     private MqttCatalogService mqttCatalogService;
     @Autowired
+    private MqttLastMessageService mqttLastMessageService;
+    @Autowired
     private MqttBrokerService mqttBrokerService;
     @Autowired
     private MqttConnect mqttConnect;
@@ -30,7 +34,16 @@ public class MqttSub{
             mqttCatalogService.save(mqttCatalogModel);
             System.out.format("-----------------------\nMQTT save: topic={%s}, \tpayload={%s}\n-----------------------\n", mqttCatalogModel.getTopic(), mqttCatalogModel.getMessage());
         } catch (NullPointerException e) {
-            System.out.println("MQTT esemeny mentes hiba!");
+            System.out.println("MQTT esemeny mentes hiba: " + e.toString());
+        }
+        try {
+            MqttLastMessageModel mqttLast = new MqttLastMessageModel(mqttCatalogModel.getTopic(), mqttCatalogModel.getMessage());
+            if (mqttLastMessageService.findTopic(mqttLast.getTopic()) == null) {
+                mqttLastMessageService.save(mqttLast);
+            } else {
+                mqttLastMessageService.update(mqttLast);
+            }
+        } catch (NullPointerException e) {
             System.out.println(e.toString());
         }
     }
@@ -63,7 +76,6 @@ public class MqttSub{
         }
 
     }
-
 //    private int getHardwerId(){
 //        if (!start) {
 //            try {

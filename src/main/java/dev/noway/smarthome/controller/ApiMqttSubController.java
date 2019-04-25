@@ -1,7 +1,9 @@
 package dev.noway.smarthome.controller;
 
 import dev.noway.smarthome.model.MqttCatalogModel;
+import dev.noway.smarthome.model.MqttLastMessageModel;
 import dev.noway.smarthome.service.MqttCatalogService;
+import dev.noway.smarthome.service.MqttLastMessageService;
 import dev.noway.smarthome.utils.MqttSub;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +23,8 @@ public class ApiMqttSubController {
     @Autowired
     private MqttCatalogService mqttCatalogService;
     @Autowired
+    private MqttLastMessageService mqttLastMessageService;
+    @Autowired
     private MqttSub mqttSub;
 
     @PreAuthorize("isAuthenticated()")
@@ -32,17 +36,25 @@ public class ApiMqttSubController {
     }
 
     @PreAuthorize("isAuthenticated()")
+    @RequestMapping(value = {"/last"}, method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<?> lastMessageStatus() {
+        Collection<MqttLastMessageModel> mqttList = mqttLastMessageService.findAll();
+        return  ResponseEntity.accepted().body(mqttList);
+    }
+
+    @PreAuthorize("isAuthenticated()")
     @RequestMapping(value = {"/start"}, method = RequestMethod.GET)
     public String catalogStart() throws Exception {
         mqttSub.mqttSubStart("#");
-        return "redirect:/admin";
+        return "redirect:/home";
     }
 
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(value = {"/stop"}, method = RequestMethod.GET)
     public String catalogStop() throws Exception {
         mqttSub.mqttSubStop("#");
-        return "redirect:/admin";
+        return "redirect:/home";
     }
 
     @PreAuthorize("isAuthenticated()")
