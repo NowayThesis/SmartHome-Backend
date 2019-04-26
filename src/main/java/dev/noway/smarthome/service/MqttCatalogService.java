@@ -16,5 +16,4 @@ public interface MqttCatalogService {
     List<MqttCatalogModel> findMessage(String message);
 
     Collection<MqttCatalogModel> findAll();
-
 }

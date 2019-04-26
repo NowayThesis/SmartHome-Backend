@@ -37,21 +37,25 @@ public class MqttLastMessageServiceImpl implements MqttLastMessageService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public MqttLastMessageModel findById(int id) {
         return mqttLastMessageRepository.findById(id).get();
     }
 
     @Override
+    @Transactional(readOnly = true)
     public MqttLastMessageModel findTopic(String topic_text) {
         return mqttLastMessageRepository.findTopicFilter(topic_text);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public MqttLastMessageModel findMessage(String message) {
         return mqttLastMessageRepository.findMessageFilter(message);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Collection<MqttLastMessageModel> findAll() {
         Iterable<MqttLastMessageModel> itr = mqttLastMessageRepository.findAll();
         return (Collection<MqttLastMessageModel>) itr;

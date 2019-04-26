@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@Entity()
+@Entity
 @Table(name = "mqtt_catalog", schema = "smart_home")
 public class MqttCatalogModel {
 
@@ -29,7 +29,6 @@ public class MqttCatalogModel {
     @DateTimeFormat(pattern = "yyyy.MM.dd HH:mm:ss.SSSZ")
     @Column(name = "add_date", nullable = false)
     private LocalDateTime addDate;
-
 
     public MqttCatalogModel() { }
 

@@ -60,6 +60,8 @@ body {
 .console .console-body {
     height: calc(100% - 24px);
     background-color: #222;
+    color: #4ebdd1;
+    overflow:auto;
 }
 .console .console-body .console-text {
     padding: 4px;

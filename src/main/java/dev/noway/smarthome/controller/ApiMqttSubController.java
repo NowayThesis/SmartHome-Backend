@@ -6,6 +6,8 @@ import dev.noway.smarthome.service.MqttCatalogService;
 import dev.noway.smarthome.service.MqttLastMessageService;
 import dev.noway.smarthome.utils.MqttSub;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -28,37 +30,35 @@ public class ApiMqttSubController {
     private MqttSub mqttSub;
 
     @PreAuthorize("isAuthenticated()")
-    @RequestMapping(value = {""}, method = RequestMethod.GET)
+    @RequestMapping(path = {""}, method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<?> calalogStatus() {
         Collection<MqttCatalogModel> mqttList = mqttCatalogService.findAll();
         return  ResponseEntity.accepted().body(mqttList);
     }
 
-    @PreAuthorize("isAuthenticated()")
-    @RequestMapping(value = {"/last"}, method = RequestMethod.GET)
+    @RequestMapping(path = {"/last"}, method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<?> lastMessageStatus() {
         Collection<MqttLastMessageModel> mqttList = mqttLastMessageService.findAll();
         return  ResponseEntity.accepted().body(mqttList);
     }
 
-    @PreAuthorize("isAuthenticated()")
-    @RequestMapping(value = {"/start"}, method = RequestMethod.GET)
+    @RequestMapping(path = {"/start"}, method = RequestMethod.POST)
     public String catalogStart() throws Exception {
         mqttSub.mqttSubStart("#");
         return "redirect:/home";
     }
 
     @PreAuthorize("isAuthenticated()")
-    @RequestMapping(value = {"/stop"}, method = RequestMethod.GET)
+    @RequestMapping(path = {"/stop"}, method = RequestMethod.POST)
     public String catalogStop() throws Exception {
         mqttSub.mqttSubStop("#");
         return "redirect:/home";
     }
 
     @PreAuthorize("isAuthenticated()")
-    @RequestMapping(value = {"/topic"}, method = RequestMethod.POST, produces = "application/json")
+    @RequestMapping(path = {"/topic"}, method = RequestMethod.POST, produces = "application/json")
     @ResponseBody
     public List<MqttCatalogModel> calalogStatus(@RequestBody MqttCatalogModel reqMqtt) {
         return mqttCatalogService.findTopic(reqMqtt.getTopic());

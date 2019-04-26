@@ -59,7 +59,7 @@ public class MqttSub{
             // elég üzenet (1 perc), a  várakozási () módszer kivételeket dob.
             mqttConnect.getMqttClient().subscribe(getTopic, mqttSubQos, (topic, msg) -> {
                 byte[] payload = msg.getPayload();
-                save(new MqttCatalogModel(topic, new String(payload), 0, 0));
+                save(new MqttCatalogModel(topic, new String(payload)));
                 receivedSignal.countDown();
             });
             receivedSignal.await(1, TimeUnit.MINUTES);

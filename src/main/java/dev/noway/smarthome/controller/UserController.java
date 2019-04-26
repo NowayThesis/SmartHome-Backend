@@ -21,8 +21,6 @@ public class UserController {
 
     @Autowired
     UserService userService;
-    @Autowired
-    GlobalController globalController;
 
     @RequestMapping("/")
     public String root(Model model) {
@@ -57,7 +55,7 @@ public class UserController {
         return "register";
     }
 
-    @RequestMapping(value = {"/user/register"}, method = RequestMethod.POST)
+    @RequestMapping(path = {"/user/register"}, method = RequestMethod.POST)
     public String register(@ModelAttribute("reqUser") UserModel reqUser,
                            final RedirectAttributes redirectAttributes) {
 

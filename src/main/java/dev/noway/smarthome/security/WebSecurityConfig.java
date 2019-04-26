@@ -19,6 +19,7 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationEn
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
+
 import java.util.LinkedHashMap;
 
 @Configuration
@@ -34,19 +35,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private UserDetailsService userDS;
     @Autowired
     private MyAuthenticationSuccessHandler successHandler;
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-    @Bean
-    public DaoAuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-        authenticationProvider.setUserDetailsService(userDetailsService());
-        authenticationProvider.setPasswordEncoder(passwordEncoder());
-        return authenticationProvider;
-    }
 
     @Autowired
     public void configureGlobalSecurity(AuthenticationManagerBuilder auth) throws Exception {
@@ -67,8 +55,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
             .csrf().disable().authorizeRequests()
-            .antMatchers("/", "/login", "/register", "/user/register", "/static/**").permitAll()
-            .antMatchers("/", "/login", "/register", "/user/register", "/webjars/**").permitAll()
+            .antMatchers("/", "/login", "/register", "/user/register", "/static/**", "/webjars/**").permitAll()
             .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')").anyRequest().authenticated()
             .and()
             .formLogin().loginPage("/login").usernameParameter("email").passwordParameter("password").permitAll().successHandler(successHandler)
@@ -84,10 +71,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public BasicAuthenticationFilter basicAuthenticationFilter()
-            throws Exception {
-        return new BasicAuthenticationFilter(authenticationManager(),
-                delegatingAuthenticationEntryPoint());
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public DaoAuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+        authenticationProvider.setUserDetailsService(userDetailsService());
+        authenticationProvider.setPasswordEncoder(passwordEncoder());
+        return authenticationProvider;
     }
 
     @Bean
@@ -101,22 +94,29 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public AuthenticationEntryPoint basicAuthenticationEntryPoint() {
-        BasicAuthenticationEntryPoint basicAuthenticationEntryPoint =
-                new BasicAuthenticationEntryPoint();
-        basicAuthenticationEntryPoint.setRealmName(BASIC_AUTH_REALM_NAME);
-        return basicAuthenticationEntryPoint;
+    public AuthenticationEntryPoint loginUrlAuthenticationEntryPoint() {
+        return new LoginUrlAuthenticationEntryPoint(LOGIN_FORM_PATH);
     }
 
     @Bean
-    public AuthenticationEntryPoint loginUrlAuthenticationEntryPoint() {
-        return new LoginUrlAuthenticationEntryPoint(LOGIN_FORM_PATH);
+    public BasicAuthenticationFilter basicAuthenticationFilter()
+            throws Exception {
+        return new BasicAuthenticationFilter(authenticationManager(),
+                delegatingAuthenticationEntryPoint());
     }
 
     @Bean
     public RequestMatcher basicAuthenticationRequestMatcher() {
 
         return new AntPathRequestMatcher(REST_PATH_PREFIX);
+    }
+
+    @Bean
+    public AuthenticationEntryPoint basicAuthenticationEntryPoint() {
+        BasicAuthenticationEntryPoint basicAuthenticationEntryPoint =
+                new BasicAuthenticationEntryPoint();
+        basicAuthenticationEntryPoint.setRealmName(BASIC_AUTH_REALM_NAME);
+        return basicAuthenticationEntryPoint;
     }
 
     @Bean
