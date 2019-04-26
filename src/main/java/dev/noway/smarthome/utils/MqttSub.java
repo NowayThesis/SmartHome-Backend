@@ -32,13 +32,13 @@ public class MqttSub{
     void save(MqttCatalogModel mqttCatalogModel) {
         try {
             mqttCatalogService.save(mqttCatalogModel);
-            System.out.format("-----------------------\nMQTT save: topic={%s}, \tpayload={%s}\n-----------------------\n", mqttCatalogModel.getTopic(), mqttCatalogModel.getMessage());
+            System.out.format("-----------------------\n| MQTT save: topic={%s}, \tpayload={%s}\n-----------------------\n", mqttCatalogModel.getTopic(), mqttCatalogModel.getMessage());
         } catch (NullPointerException e) {
             System.out.println("MQTT esemeny mentes hiba: " + e.toString());
         }
         try {
             MqttLastMessageModel mqttLast = new MqttLastMessageModel(mqttCatalogModel.getTopic(), mqttCatalogModel.getMessage());
-            if (mqttLastMessageService.findTopic(mqttLast.getTopic()) == null) {
+            if (mqttLastMessageService.findTopic(mqttCatalogModel.getTopic()) == null) {
                 mqttLastMessageService.save(mqttLast);
             } else {
                 mqttLastMessageService.update(mqttLast);

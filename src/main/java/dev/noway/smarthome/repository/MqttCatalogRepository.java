@@ -16,4 +16,6 @@ public interface MqttCatalogRepository extends CrudRepository<MqttCatalogModel, 
 
     @Query("from MqttCatalogModel m where m.message LIKE %:message%")
     List<MqttCatalogModel> findMessageFilter(@Param("message") String message);
+
+
 }

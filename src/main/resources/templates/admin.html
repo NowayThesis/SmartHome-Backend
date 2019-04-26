@@ -7,10 +7,10 @@
 <div class="container">
     <div class="row">
         <div class="col text-center form-inline">
-            <form th:action="@{/api/mqtt/sub/start}" method="post">
+            <form th:action="@{/api/mqtt/sub/start}" method="get">
                 <button type="submit" class="btn btn-primary m-2">MQTT Sob ON</button>
             </form>
-            <form th:action="@{/api/mqtt/sub/stop}" method="post">
+            <form th:action="@{/api/mqtt/sub/stop}" method="get">
                 <button type="submit" class="btn btn-primary m-2">MQTT Sob OFF</button>
             </form>
         </div>

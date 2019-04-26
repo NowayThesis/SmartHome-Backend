@@ -45,13 +45,13 @@ public class MqttLastMessageServiceImpl implements MqttLastMessageService {
     @Override
     @Transactional(readOnly = true)
     public MqttLastMessageModel findTopic(String topic_text) {
-        return mqttLastMessageRepository.findTopicFilter(topic_text);
+        return mqttLastMessageRepository.findByTopic(topic_text);
     }
 
     @Override
     @Transactional(readOnly = true)
     public MqttLastMessageModel findMessage(String message) {
-        return mqttLastMessageRepository.findMessageFilter(message);
+        return mqttLastMessageRepository.findByMessage(message);
     }
 
     @Override

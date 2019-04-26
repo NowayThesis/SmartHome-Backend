@@ -44,14 +44,14 @@ public class ApiMqttSubController {
         return  ResponseEntity.accepted().body(mqttList);
     }
 
-    @RequestMapping(path = {"/start"}, method = RequestMethod.POST)
+    @RequestMapping(path = {"/start"}, method = RequestMethod.GET)
     public String catalogStart() throws Exception {
         mqttSub.mqttSubStart("#");
         return "redirect:/home";
     }
 
     @PreAuthorize("isAuthenticated()")
-    @RequestMapping(path = {"/stop"}, method = RequestMethod.POST)
+    @RequestMapping(path = {"/stop"}, method = RequestMethod.GET)
     public String catalogStop() throws Exception {
         mqttSub.mqttSubStop("#");
         return "redirect:/home";

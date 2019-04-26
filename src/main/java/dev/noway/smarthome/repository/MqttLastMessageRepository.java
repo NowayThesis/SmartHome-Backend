@@ -17,4 +17,8 @@ public interface MqttLastMessageRepository  extends CrudRepository<MqttLastMessa
     @Query("from MqttLastMessageModel m where m.message LIKE %:message%")
     MqttLastMessageModel findMessageFilter(@Param("message") String message);
 
+    MqttLastMessageModel findByTopic(String topic);
+
+    MqttLastMessageModel findByMessage(String message);
+
 }
