@@ -54,4 +54,18 @@ public class ApiMqttPubController {
         mqttConnect.getMqttClient().publish(reqMqtt.getTopic(), new byte[0],0,true);
         return "redirect:/home";
     }
+
+    @RequestMapping(path = "/online", method = RequestMethod.POST)
+    @ResponseBody
+    public String saveOnlineProfileJson(@RequestBody MqttCatalogModel reqMqtt) throws Exception {
+        mqttPub.sendPublish(reqMqtt);
+        return "redirect:/home";
+    }
+
+    @RequestMapping(path = "/dellast", method = RequestMethod.POST)
+    @ResponseBody
+    public String dellastOnlineProfileJson(@RequestBody MqttCatalogModel reqMqtt) throws Exception {
+        lastMessageService.delete(lastMessageService.findTopic(reqMqtt.getTopic()).getId());
+        return "redirect:/home";
+    }
 }

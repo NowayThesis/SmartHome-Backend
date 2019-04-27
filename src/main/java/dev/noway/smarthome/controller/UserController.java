@@ -3,11 +3,10 @@ package dev.noway.smarthome.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import dev.noway.smarthome.model.UserModel;
 import dev.noway.smarthome.service.UserService;
@@ -56,9 +55,13 @@ public class UserController {
     }
 
     @RequestMapping(path = {"/user/register"}, method = RequestMethod.POST)
-    public String register(@ModelAttribute("reqUser") UserModel reqUser,
-                           final RedirectAttributes redirectAttributes) {
+    public String register(@ModelAttribute("reqUser") UserModel reqUser, final RedirectAttributes redirectAttributes) {
 
+        System.out.println("------------------------------------------\nt1");
+        System.out.println("Email: " + reqUser.getEmail() + ", pass: " + reqUser.getPassword() + ", pass2: " +reqUser.getPassword_2());
+        System.out.println("Redirect: " + redirectAttributes.toString());
+
+        System.out.println("------------------------------------------");
         logger.info("/user/register");
         UserModel user = userService.findByEmail(reqUser.getEmail());
         if (user != null) {
@@ -80,5 +83,35 @@ public class UserController {
         }
 
         return "redirect:/register";
+    }
+
+
+    @PreAuthorize("isAuthenticated()")
+    @RequestMapping(path = {"/api/login"}, method = RequestMethod.POST, produces = "application/json")
+    @ResponseBody
+    public UserModel apiLogin(UserModel user) {
+        System.out.println("LOGIN: " + user.getEmail());
+        if (userService.findByEmail(user.getEmail()) != null) {
+            return userService.findByEmail(user.getEmail());
+        } else {
+            return null;
+        }
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @RequestMapping(path = {"/api/register"}, method = RequestMethod.POST, consumes = "text/plain", produces = "application/json")
+    public UserModel apiRegister(UserModel reqUser) {
+        logger.info("/user/register");
+        reqUser.setPassword(PassEncoding.getInstance().passwordEncoder.encode(reqUser.getPassword()));
+        if (userService.findByRole(Roles.ROLE_ADMIN.getValue()).size() == 0) {
+            reqUser.setRole(Roles.ROLE_ADMIN.getValue());
+        } else {
+            reqUser.setRole(Roles.ROLE_USER.getValue());
+        }
+        if (userService.save(reqUser) != null) {
+            return userService.findByEmail(reqUser.getEmail());
+        } else {
+            return null;
+        }
     }
 }

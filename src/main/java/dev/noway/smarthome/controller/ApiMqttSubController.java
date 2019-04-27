@@ -45,14 +45,14 @@ public class ApiMqttSubController {
     @RequestMapping(path = {"/start"}, method = RequestMethod.GET)
     public String catalogStart() throws Exception {
         mqttSub.mqttSubStart("#");
-        return "redirect:/home";
+        return "redirect:/admin";
     }
 
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(path = {"/stop"}, method = RequestMethod.GET)
     public String catalogStop() throws Exception {
         mqttSub.mqttSubStop("#");
-        return "redirect:/home";
+        return "redirect:/admin";
     }
 
     @PreAuthorize("isAuthenticated()")

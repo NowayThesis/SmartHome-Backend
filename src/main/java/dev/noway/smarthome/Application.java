@@ -25,7 +25,7 @@ public class Application implements WebMvcConfigurer {
     public class ServerPortCustomizer implements WebServerFactoryCustomizer<ConfigurableWebServerFactory> {
         @Override
         public void customize(ConfigurableWebServerFactory factory) {
-            factory.setPort(80);
+            factory.setPort(8080);
         }
     }
 
@@ -39,4 +39,5 @@ public class Application implements WebMvcConfigurer {
     public Java8TimeDialect java8TimeDialect() {
         return new Java8TimeDialect();
     }
+
 }

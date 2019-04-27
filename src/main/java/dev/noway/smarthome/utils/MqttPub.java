@@ -42,6 +42,8 @@ public class MqttPub extends MqttConnect {
 
     public void sendPublish(MqttCatalogModel mqttCatalogModel) throws Exception {
         MqttCatalogModel newMqttCatalogModel = new MqttCatalogModel(mqttCatalogModel.getTopic(), mqttCatalogModel.getMessage());
+        System.out.println(newMqttCatalogModel.getMessage());
+        System.out.println(newMqttCatalogModel.getTopic());
         byte[] payload = String.format(newMqttCatalogModel.getMessage()).getBytes();
         MqttMessage msg = new MqttMessage(payload);
         msg.setQos(mqttPubQos);
