@@ -50,7 +50,7 @@ public class ApiMqttPubController {
 
     @RequestMapping(path = "/cleen", method = RequestMethod.POST)
     public String cleenProfileJson(MqttCatalogModel reqMqtt) throws Exception {
-        reqMqtt.setTopic("cmnd/"+reqMqtt.getTopic()+"/POWER");
+        reqMqtt.setTopic(reqMqtt.getTopic());
         mqttConnect.getMqttClient().publish(reqMqtt.getTopic(), new byte[0],0,true);
         return "redirect:/home";
     }

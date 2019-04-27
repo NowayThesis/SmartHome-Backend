@@ -19,17 +19,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RestController
 public class ApiRtspController {
 
-    @GetMapping("/test1")
-    public ModelAndView redirectWithUsingRedirectPrefix(ModelMap model) {
-        model.addAttribute("attribute", "redirectWithRedirectPrefix");
-        return new ModelAndView("redirect:/rtsp://admin:dg20160404@192.168.1.141", model);
-    }
-
     @ResponseBody
-    @RequestMapping(value = "/test2")
+    @RequestMapping(value = "/html")
     public StreamingResponseBody getHtmlStream1(@RequestParam(value = "any", required = false) String any) throws IOException {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Resource> responseEntity = restTemplate.exchange( "https://index.hu", HttpMethod.GET, null, Resource.class );
+        ResponseEntity<Resource> responseEntity = restTemplate.exchange( "http://192.168.1.11/home.html", HttpMethod.GET, null, Resource.class );
         InputStream st = responseEntity.getBody().getInputStream();
         return (os) -> {
             readAndWrite(st, os);
@@ -37,11 +31,11 @@ public class ApiRtspController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/test3")
+    @RequestMapping(value = "/video")
     public StreamingResponseBody getVidoeStream1(HttpServletRequest httpServletRequest) throws IOException {
         RestTemplate restTemplate = new RestTemplate();
         System.out.println(httpServletRequest.getLocalPort());
-        ResponseEntity<Resource> responseEntity = restTemplate.exchange( "https://192.168.1.141:8081", HttpMethod.GET, null, Resource.class );
+        ResponseEntity<Resource> responseEntity = restTemplate.exchange( "http://192.168.1.11/home.html", HttpMethod.GET, null, Resource.class );
         InputStream st = responseEntity.getBody().getInputStream();
         return (os) -> {
             readAndWrite(st, os);

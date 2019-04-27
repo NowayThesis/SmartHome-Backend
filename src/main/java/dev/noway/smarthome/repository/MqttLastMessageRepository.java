@@ -11,12 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(propagation = Propagation.MANDATORY)
 public interface MqttLastMessageRepository  extends CrudRepository<MqttLastMessageModel, Integer> {
 
-    @Query("from MqttLastMessageModel m where m.topic like %:topic%")
-    MqttLastMessageModel findTopicFilter(@Param("topic") String topic);
-
-    @Query("from MqttLastMessageModel m where m.message LIKE %:message%")
-    MqttLastMessageModel findMessageFilter(@Param("message") String message);
-
     MqttLastMessageModel findByTopic(String topic);
 
     MqttLastMessageModel findByMessage(String message);

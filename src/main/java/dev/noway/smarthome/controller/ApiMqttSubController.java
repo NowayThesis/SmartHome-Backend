@@ -6,8 +6,6 @@ import dev.noway.smarthome.service.MqttCatalogService;
 import dev.noway.smarthome.service.MqttLastMessageService;
 import dev.noway.smarthome.utils.MqttSub;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;

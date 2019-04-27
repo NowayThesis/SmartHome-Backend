@@ -41,18 +41,12 @@ public class MqttPub extends MqttConnect {
     }
 
     public void sendPublish(MqttCatalogModel mqttCatalogModel) throws Exception {
-        MqttCatalogModel newMqttCatalogModel1 = new MqttCatalogModel(mqttCatalogModel.getTopic(), mqttCatalogModel.getMessage());
-        byte[] payload = String.format(newMqttCatalogModel1.getMessage()).getBytes();
+        MqttCatalogModel newMqttCatalogModel = new MqttCatalogModel(mqttCatalogModel.getTopic(), mqttCatalogModel.getMessage());
+        byte[] payload = String.format(newMqttCatalogModel.getMessage()).getBytes();
         MqttMessage msg = new MqttMessage(payload);
-//        0 - „legfeljebb egyszer” szemantika, más néven „tűz-elfelejt”. Használja ezt az opciót,
-// ha az üzenetvesztés elfogadható, mivel nem igényel semmilyen nyugtázást vagy kitartást
-//        1 - „legalább egyszer” szemantika. Használja ezt az opciót, ha az üzenetvesztés
-// nem elfogadható,  és az előfizetői képesek kezelni a másolatokat
-//        2 - „pontosan egyszer” szemantika. Használja ezt az opciót, ha az üzenetvesztés
-// nem elfogadható,  és az előfizetői nem képesek kezelni a másolatokat
         msg.setQos(mqttPubQos);
         msg.setRetained(MQTT_PUT_RETAINED);
-        mqttConnect.getMqttClient().publish(newMqttCatalogModel1.getTopic(),msg);
-        save(newMqttCatalogModel1);
+        mqttConnect.getMqttClient().publish(newMqttCatalogModel.getTopic(),msg);
+        save(newMqttCatalogModel);
     }
 }
